@@ -1,6 +1,8 @@
 const express = require('express');
 const databaseconnect = require('./config/database');
 const app = express();
+
+const userRouter = require('./routes/User.route');
 require('dotenv').config();
 
 
@@ -11,7 +13,10 @@ const PORT = process.env.PORT || 3000;
 // <----------------------------Database connect ------------------------------------>
 databaseconnect.connect();
 
+// <----------------------------connect routes-------------------------------->
 
+app.use(express.json());
+app.use("/api/v1/auth", userRouter);
 // <------------------------------listener -------------------------------->
 app.listen(PORT, () => {
     console.log(`listening on port..            ${PORT}`)
@@ -19,10 +24,10 @@ app.listen(PORT, () => {
 
 
 
-app.get("/", (req, res) => {
+// app.get("/", (req, res) => {
 
-    return res.json({
-        success: true,
-        message: "Success running..,,.Prabhatsaini"
-    })
-});
+//     return res.json({
+//         success: true,
+//         message: "Success running..,,.Prabhatsaini"
+//     })
+// });
