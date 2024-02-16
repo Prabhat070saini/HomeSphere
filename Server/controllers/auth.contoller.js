@@ -4,13 +4,14 @@ const bcrypt = require('bcrypt');
 exports.singup = async (req, res, next) => {
     try {
         const { username, email, password, confirmpassword } = req.body;
-
+        next("daf");
         if (!username || !email || !password || !confirmpassword) {
-
-            return res.status(204).json({
+            console.log("Invalid")
+            return res.status(403).json({
                 success: false,
                 message: "Enter all the required fields"
             });
+
         }
         if (password !== confirmpassword) {
             return res.status(401).json({
@@ -42,11 +43,12 @@ exports.singup = async (req, res, next) => {
 
     }
     catch (err) {
+        next(err);
         console.log(`Error while singUp${err}`);
         return res.status(400).json({
             success: false,
             message: err.message
-        })
+        });
     }
 
 

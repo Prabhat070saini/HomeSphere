@@ -27,13 +27,13 @@ app.listen(PORT, () => {
 
 
 
-// app.get("/", (req, res) => {
+app.get("/", (req, res) => {
 
-//     return res.json({
-//         success: true,
-//         message: "Success running..,,.Prabhatsaini"
-//     })
-// });
+    return res.json({
+        success: true,
+        message: "Success running..,,.Prabhatsaini"
+    })
+});
 // <-------------------------------Middle ware to handle errors..-------------------------------;
 
 // app.use((err, req, res, next) => {

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SingOut from "./pages/SingOut";
+import SingOut from "./pages/SingUp";
 import Singin from "./pages/Singin";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
@@ -12,7 +12,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/sing-in" element={<Singin />} />
-        <Route path="/sing-out" element={<SingOut />} />
+        <Route path="/sing-up" element={<SingOut />} />
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
