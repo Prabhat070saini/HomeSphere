@@ -1,10 +1,9 @@
 
 
 
-exports.errorshandler = (message, statuscode) => {
+exports.errorHandler = (statusCode, message) => {
     const error = new Error();
-    error.statuscode = statuscode;
+    error.statusCode = statusCode;
     error.message = message;
     return error;
-}
-// export default errorshandler;
+};

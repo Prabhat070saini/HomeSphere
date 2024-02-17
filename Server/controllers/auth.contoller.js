@@ -1,34 +1,39 @@
 const User = require('../models/User.model');
-const { errorshandler } = require('../utils/error');
+const reponeSend = require('../utils/error');
 const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
+require('dotenv').config();
 exports.singup = async (req, res, next) => {
     try {
-        const { username, email, password, confirmpassword } = req.body;
-        next("daf");
-        if (!username || !email || !password || !confirmpassword) {
-            console.log("Invalid")
+        const { username, email, password, confirmPassword } = req.body;
+
+        if (!username || !email || !password || !confirmPassword) {
+            console.log("Invalid", username, email, password, confirmPassword)
             return res.status(403).json({
                 success: false,
                 message: "Enter all the required fields"
             });
 
         }
-        if (password !== confirmpassword) {
+        if (password !== confirmPassword) {
             return res.status(401).json({
                 success: false,
                 message: "confirmpassword is not match with your password"
             });
         }
         const CheckUserPresent = await User.findOne({ email });
+        console.log("mai jata hu")
         if (CheckUserPresent) {
-            console.log("CheckUserPresent")
+            console.log("CheckUserPresent");
+
             return res.status(400).json({
                 success: false,
                 message: "User already exists"
-            })
+            });
         }
 
         const Hashedpassword = await bcrypt.hash(password, 10);
+        console.log("createed user");
         const user = await User.create({
             username,
             email,
@@ -50,13 +55,64 @@ exports.singup = async (req, res, next) => {
             message: err.message
         });
     }
+}
 
 
+exports.login = async (req, res) => {
+    try {
+        //  fetch data from req
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(403).json({
+                success: false,
+                message: 'All fields are required',
+            })
+        }
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: 'User does not exist Please first SingUp',
+            });
+        }
+        // check password and create jwt token
 
+        if (await bcrypt.compare(password, user.password)) {
+            const payload = {
+                email: user.email,
+                id: user._id,
+            }
+            const token = jwt.sign(payload, process.env.JWT_SECRET, {
+                expiresIn: '3h',
+                //  "2h",
+            });
+            user.password = undefined;
+            // Genrate cookie
+            const options = {
+                expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                httpOnly: true,
+            }
 
-
-
-
-
+            res.cookie("token", token, options).status(200).json({
+                success: true,
+                token,
+                user,
+                message: `User Login Success`,
+            })
+        }
+        else {
+            return res.status(401).json({
+                success: false,
+                message: `Invalid password`,
+            });
+        }
+    }
+    catch (error) {
+        console.log(`error while logging in: ${error}`);
+        return res.status(500).json({
+            success: false,
+            message: `Loggined failed Try again later`,
+        })
+    }
 
 }

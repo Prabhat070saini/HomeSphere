@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 export default function SingUp() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({});
+  const [data, setData] = useState([]);
+  // const [check]
+  const [error, setError] = useState("");
   const handlechange = (e) => {
     setFormData({
       ...formData,
@@ -9,13 +14,27 @@ export default function SingUp() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    if (formData.password !== formData.confirmPassword) {
+      console.log(`password does not match with confirmpassword`);
+      return;
+    }
+    try {
+      // console.log(`ayas`);
+      const res = await axios.post(`v1/auth/signup`, { ...formData });
+      setData(res);
+      setError(res.data.message);
+      navigate("/sign-in");
+    } catch (e) {
+      setError(e.response.data.message);
+      console.log(e);
+    }
+    // console.log(formData);
   };
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl text-center font-semibold my-7"> Sing Up</h1>
+      <h1 className="text-3xl text-center font-semibold my-7"> Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">
           <input
@@ -41,7 +60,6 @@ export default function SingUp() {
             className="border p-3  rounded-lg"
             id="password"
             onChange={handlechange}
-            width={1000}
           />
           <input
             type="password"
@@ -51,17 +69,21 @@ export default function SingUp() {
             onChange={handlechange}
           />
 
-          <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+          <button
+            className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+            disabled={false}
+          >
             SignUp
           </button>
         </div>
       </form>
       <div className="flex gap-2 mt-5">
         <p>Have a account?</p>
-        <NavLink to="/sing-in">
-          <span className="text-blue-500">Singin</span>
+        <NavLink to="/sign-in">
+          <span className="text-blue-500">Signin</span>
         </NavLink>
       </div>
+      {error && <p>{error}</p>}
     </div>
   );
 }
