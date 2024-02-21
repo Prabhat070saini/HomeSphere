@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { signInStart, signInEnd, signInFailure } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 export default function SingUp() {
   const { loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -23,15 +24,14 @@ export default function SingUp() {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       console.log(`password does not match with confirmpassword`);
-      dispatch(signInFailure(`Password does not match with confirmpassword`));
+      dispatch(signInFailure(`Password not match with confirmpassword`));
       return;
     }
     try {
       // console.log(`ayas`);
       const res = await axios.post(`v1/auth/signup`, { ...formData });
       setData(res);
-      setError(res.data.message);
-
+      dispatch(signInEnd());
       navigate("/sign-in");
     } catch (e) {
       dispatch(signInFailure(e.response.data.message));
@@ -82,6 +82,7 @@ export default function SingUp() {
           >
             {loading ? <>loading.....</> : <>SignUp</>}
           </button>
+          <OAuth />
         </div>
       </form>
       <div className="flex gap-2 mt-5">

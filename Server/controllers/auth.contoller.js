@@ -116,3 +116,76 @@ exports.login = async (req, res) => {
     }
 
 }
+
+
+exports.google = async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.body.email });
+
+        if (user) {
+            const payload = {
+                email: user.email,
+                id: user._id,
+            }
+            const token = jwt.sign(payload, process.env.JWT_SECRET, {
+                expiresIn: '3h',
+                //  "2h",
+            });
+            user.password = undefined;
+            // Genrate cookie
+            const options = {
+                expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                httpOnly: true,
+            };
+
+            res.cookie("token", token, options).status(200).json({
+                success: true,
+                token,
+                user,
+                message: `User Login Success`,
+            })
+            console.log("google auth error", user)
+        }
+        else {
+            const genratedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+            const Hashedpassword = bcrypt.hashSync(genratedPassword, 10);
+            const user = await User.create({
+                username: req.body.username.split(" ").join("") + Math.random().toString(36).slice(-3),
+                email: req.body.email,
+                password: Hashedpassword,
+                avatar: req.body.avatar,
+            });
+            const payload = {
+                email: user.email,
+                id: user._id,
+            }
+            const token = jwt.sign(payload, process.env.JWT_SECRET, {
+                expiresIn: '3h',
+                //  "2h",
+            });
+            user.password = undefined;
+            // Genrate cookie
+            const options = {
+                expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                httpOnly: true,
+            }
+
+            res.cookie("token", token, options).status(200).json({
+                success: true,
+                token,
+                user,
+                message: `User Login Success`,
+            })
+
+        }
+        console.log("check error");
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            message: `Loggined failed while try to google login. Please try again`
+        });
+
+    }
+}
