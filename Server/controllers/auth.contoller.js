@@ -103,7 +103,7 @@ exports.login = async (req, res) => {
         else {
             return res.status(401).json({
                 success: false,
-                message: `Invalid password`,
+                message: `Wrong credentials`,
             });
         }
     }

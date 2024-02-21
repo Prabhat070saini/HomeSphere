@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { signInStart, signInEnd, signInFailure } from "../redux/user/userSlice";
 export default function SingUp() {
+  const { loading, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const [data, setData] = useState([]);
   // const [check]
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const handlechange = (e) => {
     setFormData({
       ...formData,
@@ -15,9 +19,11 @@ export default function SingUp() {
   };
 
   const handleSubmit = async (e) => {
+    dispatch(signInStart());
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       console.log(`password does not match with confirmpassword`);
+      dispatch(signInFailure(`Password does not match with confirmpassword`));
       return;
     }
     try {
@@ -25,9 +31,10 @@ export default function SingUp() {
       const res = await axios.post(`v1/auth/signup`, { ...formData });
       setData(res);
       setError(res.data.message);
+
       navigate("/sign-in");
     } catch (e) {
-      setError(e.response.data.message);
+      dispatch(signInFailure(e.response.data.message));
       console.log(e);
     }
     // console.log(formData);
@@ -71,9 +78,9 @@ export default function SingUp() {
 
           <button
             className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
-            disabled={false}
+            disabled={loading}
           >
-            SignUp
+            {loading ? <>loading.....</> : <>SignUp</>}
           </button>
         </div>
       </form>
@@ -83,7 +90,7 @@ export default function SingUp() {
           <span className="text-blue-500">Signin</span>
         </NavLink>
       </div>
-      {error && <p>{error}</p>}
+      {error && <p className="text-red-500 mt-5">{error}</p>}
     </div>
   );
 }
