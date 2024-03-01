@@ -15,6 +15,9 @@ exports.updateUserdetials = async (req, res) => {
         console.log("Welcome")
         if (req.body.password)
             req.body.password = bcryptjs.hashSync(req.body.password, 10);
+
+
+
         const updatedUser = await UserModel.findByIdAndUpdate(
             req.params.id,
             {
