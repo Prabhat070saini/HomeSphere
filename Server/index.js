@@ -1,8 +1,8 @@
 const express = require('express');
 const databaseconnect = require('./config/database');
 const app = express();
-
-const userRouter = require('./routes/User.route');
+const cookieParser = require('cookie-parser');
+const userRouter = require('./routes/Users.route');
 const authRouter = require('./routes/Auth.route');
 require('dotenv').config();
 
@@ -17,12 +17,14 @@ databaseconnect.connect();
 // <----------------------------connect routes-------------------------------->
 
 app.use(express.json());
+app.use(cookieParser());
 // app.use("/api/v1/auth", userRouter);
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/update", userRouter);
 // <------------------------------listener -------------------------------->
 app.listen(PORT, () => {
-    console.log(`listening on port..            ${PORT}`)
+    console.log(`listening on port..${PORT}`);
 });
 
 
