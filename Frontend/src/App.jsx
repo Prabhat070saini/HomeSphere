@@ -6,6 +6,7 @@ import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import About from "./pages/About";
 import ProtectedRoute from "./components/ProtectededRoute";
+import CreateListing from "./pages/CreateListing";
 export default function App() {
   return (
     <BrowserRouter>
@@ -21,6 +22,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Profile />{" "}
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/create-Listing"
+          element={
+            <ProtectedRoute>
+              <CreateListing />{" "}
             </ProtectedRoute>
           }
         />

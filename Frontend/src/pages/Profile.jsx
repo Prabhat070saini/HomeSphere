@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   getStorage,
@@ -164,6 +164,12 @@ export default function Profile() {
           {" "}
           {loading ? "loading..." : "Update"}
         </button>
+        <NavLink
+          to="/create-Listing"
+          className="bg-green-700 text-center text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
+        >
+          Create Linsting
+        </NavLink>
       </form>
       <div className="flex flex-row justify-between mt-5">
         <span className="text-red-700 cursor-pointer" onClick={handledelete}>
