@@ -4,6 +4,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const userRouter = require('./routes/Users.route');
 const authRouter = require('./routes/Auth.route');
+const listingRouter = require('./routes/Listing.route');
 require('dotenv').config();
 
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/update", userRouter);
+app.use("/api/v1/listing", listingRouter);
 // <------------------------------listener -------------------------------->
 app.listen(PORT, () => {
     console.log(`listening on port..${PORT}`);
