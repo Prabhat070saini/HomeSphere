@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   getStorage,
@@ -12,6 +13,7 @@ import {
   updateUserFailure,
   updateUserSuccess,
   updateUserStart,
+  signInEnd,
 } from "../redux/user/userSlice";
 
 export default function Profile() {
@@ -24,6 +26,7 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const usedispatch = useDispatch();
   const [formData, setFormData] = useState({});
+  const navigate = useNavigate();
   console.log(formData.avatar, "upload");
   useEffect(() => {
     if (file) {
@@ -74,6 +77,31 @@ export default function Profile() {
       console.log(currentUser, "after update");
     } catch (e) {
       console.log(e);
+      usedispatch(updateUserFailure(e.message));
+    }
+  };
+  const handledelete = async (e) => {
+    e.preventDefault();
+    try {
+      usedispatch(updateUserStart());
+      console.log("handledelete");
+      const res = await axios.delete(`v1/update/delete/${currentUser._id}`);
+      console.log(`deleted`);
+      usedispatch(updateUserSuccess(null));
+      navigate("/");
+    } catch (e) {
+      console.log(e, "Error deleteing profile");
+      usedispatch(updateUserFailure(e.message));
+    }
+  };
+
+  const handleSignout = async () => {
+    try {
+      await axios.get(`/v1/auth/signout`);
+      usedispatch(updateUserSuccess(null));
+      navigate("/");
+    } catch (e) {
+      console.log(e, "Error signout profile");
       usedispatch(updateUserFailure(e.message));
     }
   };
@@ -138,8 +166,12 @@ export default function Profile() {
         </button>
       </form>
       <div className="flex flex-row justify-between mt-5">
-        <span className="text-red-700 cursor-pointer">Delete account</span>
-        <span className="text-red-700 cursor-pointer">Sign out</span>
+        <span className="text-red-700 cursor-pointer" onClick={handledelete}>
+          Delete account
+        </span>
+        <span onClick={handleSignout} className="text-red-700 cursor-pointer">
+          Sign out
+        </span>
       </div>
 
       <p className="text-red-700 mt-5">{error ? error : ""}</p>

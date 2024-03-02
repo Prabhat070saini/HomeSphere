@@ -42,3 +42,29 @@ exports.updateUserdetials = async (req, res) => {
         })
     }
 }
+
+
+exports.deleteUser = async (req, res) => {
+    console.log("deleteUser", req.user.id)
+    if (req.user.id !== req.params.id) {
+        return res(401).json({
+            success: false,
+            message: `Unauthorized access`
+        })
+    }
+    try {
+
+        await UserModel.findByIdAndDelete(req.user.id);
+        res.clearCookie('token');
+        return res.status(200).json({
+            success: true,
+            message: `User deleted successfully`
+        })
+    }
+    catch (e) {
+        return res.status(403).json({
+            success: false,
+            message: e.message
+        });
+    }
+}

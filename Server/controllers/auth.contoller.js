@@ -189,3 +189,23 @@ exports.google = async (req, res) => {
 
     }
 }
+
+
+
+exports.singOUt = async (req, res) => {
+    try {
+        res.clearCookie('token');
+        return res.status(200).json({
+            success: true,
+            message: `singOut was successful`
+        });
+    }
+    catch (e) {
+        return res.status(500).json({
+            success: false,
+            message: e.message
+        })
+
+
+    }
+}
