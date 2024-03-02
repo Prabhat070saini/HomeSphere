@@ -3,7 +3,13 @@ const initialState = {
     currentUser: null,
     error: "",
     loading: false,
+    token: localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null,
 };
+// const initialState = {
+//     signupData: null,
+//     loading: false,
+
+// };
 const userSlice = createSlice({
     name: 'user',
     initialState: initialState,
@@ -38,7 +44,18 @@ const userSlice = createSlice({
             state.error = action.payload;
             state.loading = false;
         },
+        startloading: (state) => {
+            state.loading = true;
+        },
+        endloading: (state) => {
+            state.loading = false;
+        },
+        setError: (state, value) => {
+            // console.log(`singig${value.payload}`)
+            state.error = value.payload;
+            state.loading = false;
+        },
     }
 });
-export const { signInFailure, signInStart, signInSuccess, signInEnd, updateUserStart, updateUserSuccess, updateUserFailure } = userSlice.actions;
+export const { signInFailure, signInStart, signInSuccess, signInEnd, updateUserStart, updateUserSuccess, updateUserFailure, startloading, endloading, setError } = userSlice.actions;
 export default userSlice.reducer;
