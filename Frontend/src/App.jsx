@@ -8,6 +8,7 @@ import About from "./pages/About";
 import ProtectedRoute from "./components/ProtectededRoute";
 import CreateListing from "./pages/CreateListing";
 import UpdateListing from "./pages/UpdateListing";
+import Listing from "./pages/Listing";
 export default function App() {
   return (
     <BrowserRouter>
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/sign-in" element={<Singin />} />
         <Route path="/sign-up" element={<SingOut />} />
         <Route path="/about" element={<About />} />
+        <Route path="/listing/:listingid" element={<Listing />} />
 
         <Route
           path="/profile"

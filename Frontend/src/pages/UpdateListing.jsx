@@ -36,7 +36,7 @@ const CreateListing = () => {
   //   console.log("under update lisitnformData=>", formData);
   const params = useParams();
   const listingid = params.listingid;
-
+  console.log(`listingid: ${listingid}`);
   useEffect(() => {
     const fetchListing = async () => {
       const res = await axios.get(`/v1/listing/getlist/${listingid}`);
@@ -158,7 +158,7 @@ const CreateListing = () => {
       });
       console.log(res, "on submit lisitng");
       dispatch(endloading());
-      //   navigate(`/listing/${currentUser._id}`);
+      navigate(`/listing/${res.data.updateListing._id}`);
     } catch (error) {
       dispatch(setError(error));
       dispatch(endloading());
@@ -285,13 +285,13 @@ const CreateListing = () => {
             <div className="flex items-center gap-2">
               <input
                 type="number"
-                id="beds"
+                id="bedrooms"
                 min="1"
                 max={10}
                 required
                 onChange={handleChange}
                 className="p-3 border border-gray-300"
-                value={formData.beds}
+                value={formData.bedrooms}
               />
               <span>Beds</span>
             </div>
