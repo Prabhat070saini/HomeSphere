@@ -117,6 +117,16 @@ export default function Profile() {
       setShowListingError(`${e.message}`);
     }
   };
+  const handleDeleteListing = async (list) => {
+    try {
+      console.log("list", list);
+      const res = await axios.delete(`v1/listing/delete/${list}`);
+      console.log(res);
+      handleShowListing();
+    } catch (e) {
+      console.log(`Error deleting listing ${e}`);
+    }
+  };
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Profile</h1>
@@ -229,7 +239,12 @@ export default function Profile() {
                 <p>{list.name}</p>
               </NavLink>
               <div className="flex flex-col items-center">
-                <button className="text-red-700 uppercase">Delete</button>
+                <button
+                  className="text-red-700 uppercase"
+                  onClick={() => handleDeleteListing(list._id)}
+                >
+                  Delete
+                </button>
                 <button className="text-green-700 uppercase">Edit</button>
               </div>
             </div>
