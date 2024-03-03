@@ -27,7 +27,8 @@ export default function Profile() {
   const usedispatch = useDispatch();
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
-  console.log(formData.avatar, "upload");
+  // console.log(formData.avatar, "upload");
+  const [showListingError, setShowListingError] = useState(false);
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
@@ -103,6 +104,17 @@ export default function Profile() {
     } catch (e) {
       console.log(e, "Error signout profile");
       usedispatch(updateUserFailure(e.message));
+    }
+  };
+  const [listing, setListing] = useState([]);
+  const handleShowListing = async () => {
+    try {
+      setShowListingError(``);
+      const res = await axios.get(`v1/update/listings/${currentUser._id}`);
+      setListing(res.data.listings);
+      console.log(listing);
+    } catch (e) {
+      setShowListingError(`${e.message}`);
     }
   };
   return (
@@ -184,6 +196,45 @@ export default function Profile() {
       <p className="text-green-700 mt-5">
         {userUpdatecheck ? "User Update Successfully" : ""}
       </p>
+      <button className="text-green-700 w-full" onClick={handleShowListing}>
+        Show Listing
+      </button>
+      <p className="text-red-700 mt-5">
+        {showListingError ? showListingError : ""}
+      </p>
+      {listing.length > 0 && (
+        <h1 className="text-center my-7 text-3xl font-semibold">
+          Your Listing
+        </h1>
+      )}
+      {listing &&
+        listing.length > 0 &&
+        listing.map((list) => {
+          return (
+            <div
+              key={list._id}
+              className=" p-3 gap-4 flex justify-between items-center border rounded-lg"
+            >
+              <NavLink to={`/listing/${list._id}`}>
+                <img
+                  src={list.imageUrls[0]}
+                  alt=""
+                  className="h-16 w-16 object-contain "
+                />
+              </NavLink>
+              <NavLink
+                to={`/listing/${list._id}`}
+                className="font-semibold text-slate-700 flex-1 hover:underline truncate"
+              >
+                <p>{list.name}</p>
+              </NavLink>
+              <div className="flex flex-col items-center">
+                <button className="text-red-700 uppercase">Delete</button>
+                <button className="text-green-700 uppercase">Edit</button>
+              </div>
+            </div>
+          );
+        })}
     </div>
   );
 }

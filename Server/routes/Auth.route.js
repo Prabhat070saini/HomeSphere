@@ -6,5 +6,5 @@ router.post('/signup', singup);
 router.post('/signin', login);
 
 router.post('/google', google);
-router.get('/signOut', verifyToken, singOUt)
+router.get('/signOut', singOUt)
 module.exports = router
