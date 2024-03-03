@@ -72,7 +72,7 @@ exports.deleteUser = async (req, res) => {
 
 exports.getUserListings = async (req, res) => {
     if (req.user.id !== req.params.id) {
-        return res(401).json({
+        return res.status(401).json({
             success: false,
             message: `you can only view your own listings`
         })

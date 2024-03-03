@@ -245,7 +245,12 @@ export default function Profile() {
                 >
                   Delete
                 </button>
-                <button className="text-green-700 uppercase">Edit</button>
+                <NavLink
+                  to={`/update-Listing/${list._id}`}
+                  className="text-green-700 uppercase"
+                >
+                  Edit
+                </NavLink>
               </div>
             </div>
           );

@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import About from "./pages/About";
 import ProtectedRoute from "./components/ProtectededRoute";
 import CreateListing from "./pages/CreateListing";
+import UpdateListing from "./pages/UpdateListing";
 export default function App() {
   return (
     <BrowserRouter>
@@ -26,10 +27,18 @@ export default function App() {
           }
         />
         <Route
-          path="/create-Listing"
+          path="/create-Listing/"
           element={
             <ProtectedRoute>
               <CreateListing />{" "}
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/update-Listing/:listingid"
+          element={
+            <ProtectedRoute>
+              <UpdateListing />{" "}
             </ProtectedRoute>
           }
         />

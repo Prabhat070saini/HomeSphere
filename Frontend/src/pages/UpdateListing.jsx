@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   getStorage,
@@ -9,7 +9,7 @@ import {
 import { startloading, endloading, setError } from "../redux/user/userSlice";
 import { app } from "../firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const CreateListing = () => {
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const [errors, setErrors] = useState("");
@@ -33,7 +33,18 @@ const CreateListing = () => {
     parking: false,
     furnished: false,
   });
-  // console.log("formData=>", formData);
+  //   console.log("under update lisitnformData=>", formData);
+  const params = useParams();
+  const listingid = params.listingid;
+
+  useEffect(() => {
+    const fetchListing = async () => {
+      const res = await axios.get(`/v1/listing/getlist/${listingid}`);
+      setFormData(res.data.listing);
+    };
+    fetchListing();
+  }, []);
+
   const handleImageSubmit = (e) => {
     if (files.length === 0) {
       setImageUploadError(`You dont have any images selected`);
@@ -141,14 +152,13 @@ const CreateListing = () => {
         return;
       }
       dispatch(startloading());
-      console.log(`on submit`, formData);
-      const res = await axios.post(`v1/listing/create`, {
+      console.log(`under update lis${listingid}`);
+      const res = await axios.post(`/v1/listing/update/${listingid}`, {
         ...formData,
-        userRef: currentUser._id,
       });
       console.log(res, "on submit lisitng");
       dispatch(endloading());
-      navigate(`/listing/${currentUser._id}`);
+      //   navigate(`/listing/${currentUser._id}`);
     } catch (error) {
       dispatch(setError(error));
       dispatch(endloading());
@@ -157,7 +167,7 @@ const CreateListing = () => {
   return (
     <main className="p-3 max-w-4xl mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">
-        Create a Listing
+        Update a Listing
       </h1>
       <form className="flex flex-col sm:flex-row gap-4" onSubmit={handleSubmit}>
         {/* ---------------------------------left side  div ---------------------------------------------------------------------- */}
@@ -251,7 +261,7 @@ const CreateListing = () => {
               max={10}
               required
               onChange={handleChange}
-              className="p-3 border border-gray-300 outline-none"
+              className="p-3 border border-gray-300"
               value={formData.bathrooms}
             />
             <span>Baths</span>
@@ -363,7 +373,7 @@ const CreateListing = () => {
         hover:opacity-95"
             disabled={imageloading || loading}
           >
-            {loading ? "Creating..." : "Create Listing"}
+            {loading ? "Creating..." : "Update Listing"}
           </button>
           {error ? (
             <p className="text-red-500 p-3 rounded-lg uppercase hover:opacity-75">
