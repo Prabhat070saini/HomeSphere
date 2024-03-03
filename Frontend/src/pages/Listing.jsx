@@ -15,6 +15,7 @@ import {
   FaParking,
   FaShare,
 } from "react-icons/fa";
+import Contact from "../components/Contact";
 const Listing = () => {
   SwiperCore.use([Navigation]);
   const [contact, setContact] = useState(false);
@@ -62,10 +63,9 @@ const Listing = () => {
         <div>
           <Swiper navigation>
             {list.imageUrls.map((url) => (
-              <SwiperSlide>
+              <SwiperSlide key={url}>
                 <div
                   className="h-[550px]"
-                  key={url}
                   style={{
                     background: `url('${url}') center no-repeat `,
                     backgroundSize: "cover",
@@ -147,7 +147,7 @@ const Listing = () => {
                 Contact landlord
               </button>
             )}
-            {/* {contact && <Contact listing={list} />} */}
+            {contact && <Contact list={list} />}
           </div>
         </div>
       )}

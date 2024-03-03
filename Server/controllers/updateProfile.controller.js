@@ -93,3 +93,29 @@ exports.getUserListings = async (req, res) => {
         })
     }
 }
+
+exports.getUser = async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.params.id);
+        // console.log(`sdfa`, user, req.params.id);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: `User not found`
+            })
+        }
+        user.password = undefined;
+        user.avatar = undefined;
+        return res.status(200).json({
+            success: true,
+            user,
+            message: `user found`
+        });
+    }
+    catch (e) {
+        return res.status(500).json({
+            success: false,
+            message: e.message
+        })
+    }
+}
