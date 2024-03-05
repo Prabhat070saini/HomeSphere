@@ -8,6 +8,7 @@ import {
   signInEnd,
   signInFailure,
   signInSuccess,
+  endloading,
 } from "../redux/user/userSlice";
 import axios from "axios";
 // if we make a button on under form or make not to call submit then make a type of a button
@@ -21,6 +22,7 @@ const OAuth = () => {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
+      console.log(result);
       const res = await axios.post(`v1/auth/google`, {
         username: result.user.displayName,
         email: result.user.email,
@@ -31,6 +33,7 @@ const OAuth = () => {
 
       console.log(res);
     } catch (err) {
+      dispatch(endloading());
       console.log("error with try to login with google ", err);
     }
   };
