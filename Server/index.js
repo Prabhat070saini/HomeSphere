@@ -5,9 +5,10 @@ const cookieParser = require('cookie-parser');
 const userRouter = require('./routes/Users.route');
 const authRouter = require('./routes/Auth.route');
 const listingRouter = require('./routes/Listing.route');
+const path = require('path')
 require('dotenv').config();
 
-
+const __dirnames = path.resolve();
 const PORT = process.env.PORT || 3000;
 
 // mongooose.connect(backend_url).then(() => console.log('Connected to Db')).catch((error) => console.log(error));
@@ -24,6 +25,10 @@ app.use(cookieParser());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/update", userRouter);
 app.use("/api/v1/listing", listingRouter);
+app.use(express.static(path.join(__dirnames, '/Frontend/dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirnames, 'Frontend', 'dist', 'index.html'));
+})
 // <------------------------------listener -------------------------------->
 app.listen(PORT, () => {
     console.log(`listening on port..${PORT}`);
