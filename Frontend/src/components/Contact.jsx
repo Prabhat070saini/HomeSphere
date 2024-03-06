@@ -17,7 +17,7 @@ export default function Contact({ list }) {
 
         setLandlord(res.data.user);
       } catch (error) {
-        console.log(error);
+        console.log(error, "Error");
       }
     };
     fetchLandlord();
