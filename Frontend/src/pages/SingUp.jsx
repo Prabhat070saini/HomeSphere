@@ -17,6 +17,7 @@ export default function SingUp() {
       ...formData,
       [e.target.id]: e.target.value,
     });
+    // console.log(formData);
   };
 
   const handleSubmit = async (e) => {
@@ -59,6 +60,9 @@ export default function SingUp() {
             className="border p-3  rounded-lg"
             id="email"
             onChange={handlechange}
+            style={{
+              textTransform: "capitalize",
+            }}
           />
 
           <input

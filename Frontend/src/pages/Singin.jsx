@@ -52,6 +52,9 @@ export default function Singin() {
             placeholder="Ex@example.com"
             className="border p-3  rounded-lg"
             id="email"
+            style={{
+              textTransform: "capitalize",
+            }}
             onChange={handlechange}
           />
 
