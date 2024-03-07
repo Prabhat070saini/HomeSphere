@@ -39,7 +39,7 @@ const CreateListing = () => {
   console.log(`listingid: ${listingid}`);
   useEffect(() => {
     const fetchListing = async () => {
-      const res = await axios.get(`/v1/listing/getlist/${listingid}`);
+      const res = await axios.get(`/api/v1/listing/getlist/${listingid}`);
       setFormData(res.data.listing);
     };
     fetchListing();
@@ -153,7 +153,7 @@ const CreateListing = () => {
       }
       dispatch(startloading());
       console.log(`under update lis${listingid}`);
-      const res = await axios.post(`/v1/listing/update/${listingid}`, {
+      const res = await axios.post(`/api/v1/listing/update/${listingid}`, {
         ...formData,
       });
       console.log(res, "on submit lisitng");

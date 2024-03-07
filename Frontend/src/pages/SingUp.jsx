@@ -30,7 +30,7 @@ export default function SingUp() {
     }
     try {
       // console.log(`ayas`);
-      const res = await axios.post(`v1/auth/signup`, { ...formData });
+      const res = await axios.post(`/api/v1/auth/signup`, { ...formData });
       setData(res);
       dispatch(signInEnd());
       navigate("/sign-in");

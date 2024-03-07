@@ -142,7 +142,7 @@ const CreateListing = () => {
       }
       dispatch(startloading());
       console.log(`on submit`, formData);
-      const res = await axios.post(`v1/listing/create`, {
+      const res = await axios.post(`/api/v1/listing/create`, {
         ...formData,
         userRef: currentUser._id,
       });

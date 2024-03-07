@@ -29,7 +29,7 @@ export default function Singin() {
 
     try {
       dispatch(signInStart());
-      const res = await axios.post(`v1/auth/signin`, { ...formData });
+      const res = await axios.post(`/api/v1/auth/signin`, { ...formData });
       setData(res);
       console.log(res.data);
       dispatch(signInSuccess(res.data.user));

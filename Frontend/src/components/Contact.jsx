@@ -12,7 +12,7 @@ export default function Contact({ list }) {
     const fetchLandlord = async () => {
       try {
         console.log("uns", list.userRef);
-        const res = await axios.get(`/v1/update/${list.userRef}`);
+        const res = await axios.get(`/api/v1/update/${list.userRef}`);
         console.log(`res`, res.data.user);
 
         setLandlord(res.data.user);

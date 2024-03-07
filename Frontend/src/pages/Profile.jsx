@@ -69,7 +69,7 @@ export default function Profile() {
     try {
       usedispatch(updateUserStart());
       const res = await axios.post(
-        `v1/update/updateProfile/${currentUser._id}`,
+        `/api/v1/update/updateProfile/${currentUser._id}`,
         { ...formData }
       );
       // dispatch(signInSuccess(res.data.user));
@@ -86,7 +86,9 @@ export default function Profile() {
     try {
       usedispatch(updateUserStart());
       console.log("handledelete");
-      const res = await axios.delete(`v1/update/delete/${currentUser._id}`);
+      const res = await axios.delete(
+        `/api/v1/update/delete/${currentUser._id}`
+      );
       console.log(`deleted`);
       usedispatch(updateUserSuccess(null));
       navigate("/");
@@ -98,7 +100,7 @@ export default function Profile() {
 
   const handleSignout = async () => {
     try {
-      await axios.get(`/v1/auth/signout`);
+      await axios.get(`/api/v1/auth/signout`);
       usedispatch(updateUserSuccess(null));
       navigate("/");
     } catch (e) {
@@ -110,7 +112,7 @@ export default function Profile() {
   const handleShowListing = async () => {
     try {
       setShowListingError(``);
-      const res = await axios.get(`v1/update/listings/${currentUser._id}`);
+      const res = await axios.get(`/api/v1/update/listings/${currentUser._id}`);
       setListing(res.data.listings);
       console.log(listing);
     } catch (e) {
@@ -120,7 +122,7 @@ export default function Profile() {
   const handleDeleteListing = async (list) => {
     try {
       console.log("list", list);
-      const res = await axios.delete(`v1/listing/delete/${list}`);
+      const res = await axios.delete(`/api/v1/listing/delete/${list}`);
       console.log(res);
       handleShowListing();
     } catch (e) {

@@ -31,7 +31,7 @@ const Listing = () => {
     try {
       setLoading(true);
       const fetchListing = async () => {
-        const res = await axios.get(`/v1/listing/getlist/${listingid}`);
+        const res = await axios.get(`/api/v1/listing/getlist/${listingid}`);
         setList(res.data.listing);
         if (res.data.success === false) {
           setError(true);

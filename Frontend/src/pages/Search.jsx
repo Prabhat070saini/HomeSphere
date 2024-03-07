@@ -52,7 +52,7 @@ export default function Search() {
       setLoading(true);
       setShowMore(false);
       const searchQuery = urlParams.toString();
-      const res = await axios.get(`/v1/listing/getlistings?${searchQuery}`);
+      const res = await axios.get(`/api/v1/listing/getlistings?${searchQuery}`);
       // console.log(res, `search query: ${searchQuery}`);
       const data = res.data.listings;
       if (data.length > 8) {
@@ -123,7 +123,7 @@ export default function Search() {
     urlParams.set("startIndex", startIndex);
     const searchQuery = urlParams.toString();
     // const res = await fetch(`/api/listing/get?${searchQuery}`);
-    const res = await axios.get(`/v1/listing/getlistings?${searchQuery}`);
+    const res = await axios.get(`/api/v1/listing/getlistings?${searchQuery}`);
     const data = res.data.listings;
     if (data.length < 9) {
       setShowMore(false);
