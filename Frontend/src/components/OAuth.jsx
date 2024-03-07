@@ -22,7 +22,7 @@ const OAuth = () => {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
-      console.log(result);
+      // console.log(result);
       const res = await axios.post(`/api/v1/auth/google`, {
         username: result.user.displayName,
         email: result.user.email,
@@ -31,7 +31,7 @@ const OAuth = () => {
       dispatch(signInSuccess(res.data.user));
       navigate("/");
 
-      console.log(res);
+      // console.log(res);
     } catch (err) {
       dispatch(endloading());
       console.log("error with try to login with google ", err);

@@ -46,7 +46,7 @@ export default function Profile() {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setFilepercentage(Math.round(progress));
-        console.log(`Upload is ${progress} done`);
+        // console.log(`Upload is ${progress} done`);
       },
       (error) => {
         setFileUploadError(true);
@@ -61,7 +61,7 @@ export default function Profile() {
 
   const handlechange = (event) => {
     setFormData({ ...formData, [event.target.id]: event.target.value });
-    console.log(formData);
+    // console.log(formData);
   };
 
   const handleSubmit = async (event) => {
@@ -75,7 +75,7 @@ export default function Profile() {
       // dispatch(signInSuccess(res.data.user));
       usedispatch(updateUserSuccess(res.data.updatedUser));
       setUserUpdatecheck(true);
-      console.log(currentUser, "after update");
+      // console.log(currentUser, "after update");
     } catch (e) {
       console.log(e);
       usedispatch(updateUserFailure(e.message));
@@ -85,11 +85,11 @@ export default function Profile() {
     e.preventDefault();
     try {
       usedispatch(updateUserStart());
-      console.log("handledelete");
+      // console.log("handledelete");
       const res = await axios.delete(
         `/api/v1/update/delete/${currentUser._id}`
       );
-      console.log(`deleted`);
+      // console.log(`deleted`);
       usedispatch(updateUserSuccess(null));
       navigate("/");
     } catch (e) {
@@ -114,16 +114,16 @@ export default function Profile() {
       setShowListingError(``);
       const res = await axios.get(`/api/v1/update/listings/${currentUser._id}`);
       setListing(res.data.listings);
-      console.log(listing);
+      // console.log(listing);
     } catch (e) {
       setShowListingError(`${e.message}`);
     }
   };
   const handleDeleteListing = async (list) => {
     try {
-      console.log("list", list);
+      // console.log("list", list);
       const res = await axios.delete(`/api/v1/listing/delete/${list}`);
-      console.log(res);
+      // console.log(res);
       handleShowListing();
     } catch (e) {
       console.log(`Error deleting listing ${e}`);

@@ -22,7 +22,7 @@ const Listing = () => {
   const { currentUser } = useSelector((state) => state.user);
   const params = useParams();
   const listingid = params.listingid;
-  console.log(`listing ${listingid}`);
+  // console.log(`listing ${listingid}`);
   const [list, setList] = useState({});
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);

@@ -11,9 +11,9 @@ export default function Contact({ list }) {
   useEffect(() => {
     const fetchLandlord = async () => {
       try {
-        console.log("uns", list.userRef);
+        // console.log("uns", list.userRef);
         const res = await axios.get(`/api/v1/update/${list.userRef}`);
-        console.log(`res`, res.data.user);
+        // console.log(`res`, res.data.user);
 
         setLandlord(res.data.user);
       } catch (error) {

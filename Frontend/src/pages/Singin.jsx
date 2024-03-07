@@ -31,7 +31,7 @@ export default function Singin() {
       dispatch(signInStart());
       const res = await axios.post(`/api/v1/auth/signin`, { ...formData });
       setData(res);
-      console.log(res.data);
+      // console.log(res.data);
       dispatch(signInSuccess(res.data.user));
 
       navigate("/ ");
@@ -39,7 +39,7 @@ export default function Singin() {
       console.log(e);
       dispatch(signInFailure(e.response.data.message));
     }
-    console.log("user current ", currentUser);
+    // console.log("user current ", currentUser);
   };
   return (
     <div className="p-3 max-w-lg mx-auto">

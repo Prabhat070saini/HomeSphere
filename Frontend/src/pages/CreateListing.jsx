@@ -76,7 +76,7 @@ const CreateListing = () => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           //   setFilepercentage(Math.round(progress));
-          console.log(`Upload is ${progress} done`);
+          // console.log(`Upload is ${progress} done`);
         },
         (error) => {
           reject(error);
@@ -136,17 +136,17 @@ const CreateListing = () => {
         return;
       }
       if (formData.regularPrice < formData.discountPrice) {
-        console.log(`Submit`);
+        // console.log(`Submit`);/
         setErrors(`RegularPrice not less than DiscountPrice`);
         return;
       }
       dispatch(startloading());
-      console.log(`on submit`, formData);
+      // console.log(`on submit`, formData);
       const res = await axios.post(`/api/v1/listing/create`, {
         ...formData,
         userRef: currentUser._id,
       });
-      console.log(res, "on submit lisitng");
+      // console.log(res, "on submit lisitng");
       dispatch(endloading());
       navigate(`/listing/${res.data.listing._id}`);
     } catch (error) {

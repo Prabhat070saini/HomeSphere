@@ -36,7 +36,7 @@ const CreateListing = () => {
   //   console.log("under update lisitnformData=>", formData);
   const params = useParams();
   const listingid = params.listingid;
-  console.log(`listingid: ${listingid}`);
+  // console.log(`listingid: ${listingid}`);
   useEffect(() => {
     const fetchListing = async () => {
       const res = await axios.get(`/api/v1/listing/getlist/${listingid}`);
@@ -87,7 +87,7 @@ const CreateListing = () => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           //   setFilepercentage(Math.round(progress));
-          console.log(`Upload is ${progress} done`);
+          // console.log(`Upload is ${progress} done`);
         },
         (error) => {
           reject(error);
@@ -147,16 +147,16 @@ const CreateListing = () => {
         return;
       }
       if (formData.regularPrice < formData.discountPrice) {
-        console.log(`Submit`);
+        // console.log(`Submit`);/
         setErrors(`RegularPrice not less than DiscountPrice`);
         return;
       }
       dispatch(startloading());
-      console.log(`under update lis${listingid}`);
+      // console.log(`under update lis${listingid}`);
       const res = await axios.post(`/api/v1/listing/update/${listingid}`, {
         ...formData,
       });
-      console.log(res, "on submit lisitng");
+      // console.log(res, "on submit lisitng");
       dispatch(endloading());
       navigate(`/listing/${res.data.updateListing._id}`);
     } catch (error) {
