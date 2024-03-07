@@ -7,18 +7,10 @@ export default defineConfig({
   server: {
     proxy: {
       '/v1': {
-        target: `https://home-sphere-backend.vercel.app/api`,
+        target: `http://localhost:5000/api`,
         secure: false,
-        changeOrigin: true,
+        // changeOrigin: true,
       },
-    },
-  },
-  build: {
-    // generate .vite/manifest.json in outDir
-    manifest: true,
-    rollupOptions: {
-      // overwrite default .html entry
-      input: '/src/main.jsx',
     },
   },
 });
