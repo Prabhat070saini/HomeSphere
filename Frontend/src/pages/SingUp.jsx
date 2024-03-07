@@ -61,7 +61,7 @@ export default function SingUp() {
             id="email"
             onChange={handlechange}
             style={{
-              textTransform: "capitalize",
+              textTransform: "lowercase",
             }}
           />
 
