@@ -3,13 +3,22 @@ import react from '@vitejs/plugin-react-swc'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  plugins: [react()],
   server: {
     proxy: {
       '/v1': {
-        target: `http://localhost:5000/api`,
+        target: `https://home-sphere-backend.vercel.app/api`,
         secure: false,
+        changeOrigin: true,
       },
     },
   },
-  plugins: [react()],
+  build: {
+    // generate .vite/manifest.json in outDir
+    manifest: true,
+    rollupOptions: {
+      // overwrite default .html entry
+      input: '/src/main.jsx',
+    },
+  },
 });

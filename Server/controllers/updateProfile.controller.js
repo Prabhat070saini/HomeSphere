@@ -88,7 +88,6 @@ exports.getUserListings = async (req, res) => {
     catch (e) {
         res.status(401).json({
             success: false,
-
             message: e.message
         })
     }

@@ -53,7 +53,7 @@ export default function Singin() {
             className="border p-3  rounded-lg"
             id="email"
             style={{
-              textTransform: "capitalize",
+              textTransform: "lowercase",
             }}
             onChange={handlechange}
           />
