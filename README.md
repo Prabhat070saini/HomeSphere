@@ -11,7 +11,7 @@ This starter pack includes a basic setup for using **Tailwind CSS with React+Vit
 1. Clone the repository to your local machine.
 
    ```sh
-   git pull   git@github.com:Prabhat070saini/BrainBoost.git
+   git pull   git@github.com:Prabhat070saini/HomeSphere.git
    ```
 
 1. Install the required packages.
