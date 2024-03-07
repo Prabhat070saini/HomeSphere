@@ -17,9 +17,9 @@ export default function Home() {
     const fetchOfferListings = async () => {
       try {
         // const res = await fetch("/api/listing/get?offer=true&limit=4");
-        console.log(`/v1/listing/get?offer=true&limit=4`);
+        // console.log(`/api/v1/listing/get?offer=true&limit=4`);
         const res = await axios.get(
-          `/v1/listing/getlistings?offer=true&limit=4`
+          `/api/v1/listing/getlistings?offer=true&limit=4`
         );
         const data = res.data.listings;
         console.log(data);
@@ -33,7 +33,7 @@ export default function Home() {
       try {
         // const res = await fetch("/api/listing/get?type=rent&limit=4");
         const res = await axios.get(
-          `/v1/listing/getlistings?type=rent&limit=4`
+          `/api/v1/listing/getlistings?type=rent&limit=4`
         );
         const data = res.data.listings;
         setRentListings(data);
@@ -47,7 +47,7 @@ export default function Home() {
       try {
         // const res = await fetch("/api/listing/get?type=sale&limit=4");
         const res = await axios.get(
-          `/v1/listing/getlistings?type=sale&limit=4`
+          `/api/v1/listing/getlistings?type=sale&limit=4`
         );
         const data = res.data.listings;
         setSaleListings(data);
